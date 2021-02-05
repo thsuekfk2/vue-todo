@@ -1,7 +1,7 @@
 <template>
     <section>
         <ul>
-            <li v-for="(todoItem , index) in todoItems" v-bind:key="todoItem.id" class="shadow">
+            <li v-for="(todoItem , index) in propsdata" v-bind:key="todoItem" class="shadow">
                 <i class="checkBtn fas fa-check" aria-hidden="true"></i>    
                 {{todoItem}}
                 <span class="removeBtn" type="button" @click="removeTodo(todoItem,index)">
@@ -14,25 +14,15 @@
 </template>
 <script>
 export default {
-    data(){
-        return{
-            todoItems: []
-        }
-    },
-     created(){
-        if(localStorage.length > 0){
-            for(var i=0; i < localStorage.length; i++){
-               if(localStorage.key(i)!="loglevel:webpack-dev-server")
-               this.todoItems.push(localStorage.key(i));
-            }
-        }
-    },
+    props:['propsdata'],
+   
+
+
     methods:{
         removeTodo(todoItem,index){
-            localStorage.removeItem(todoItem);
-            this.todoItems.splice(index, 1);
-            // console.log(todoItem,index);
-        }
+           this.$emit('removeTodo',todoItem,index);
+        },
+        
 
 
     }
